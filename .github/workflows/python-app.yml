@@ -1,0 +1,35 @@
+name: Deploy to App Runner
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: your-aws-region
+
+      - name: Configure and Deploy to App Runner
+        run: |
+          aws apprunner create-service \
+            --service-name your-service-name \
+            --source-repo your-github-repo-url \
+            --source-branch main \
+            --runtime nodejs12 \
+            --build-command "npm install && npm run build" \
+            --start-command "npm start" \
+            --region your-aws-region
+
+    env:
+      AWS_DEFAULT_REGION: your-aws-region
