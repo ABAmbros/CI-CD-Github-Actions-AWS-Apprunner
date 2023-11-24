@@ -29,8 +29,8 @@ jobs:
           repo: https://github.com/ABAmbros/Repo_App_Runner.git
           branch: main
           runtime: PYTHON_3
-          build-command: pip install -r requirements.txt
-          start-command: python app.py
+          build-command: pip install -r app/requirements.txt
+          start-command: python app/app.py
           port: 8080
           region: ${{ secrets.AWS_REGION }}
           cpu : 1
