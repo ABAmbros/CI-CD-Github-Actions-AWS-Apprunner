@@ -18,18 +18,26 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: your-aws-region
-
-      - name: Configure and Deploy to App Runner
-        run: |
-          aws apprunner create-service \
-            --service-name your-service-name \
-            --source-repo your-github-repo-url \
-            --source-branch main \
-            --runtime nodejs12 \
-            --build-command "npm install && npm run build" \
-            --start-command "npm start" \
-            --region your-aws-region
-
-    env:
-      AWS_DEFAULT_REGION: your-aws-region
+          aws-region: ${{ secrets.AWS_REGION }}
+          
+      - name: Deploy to App Runner
+        id: deploy-apprunner
+        uses: awslabs/amazon-app-runner-deploy@main
+        with:
+          service: app-runner-git-deploy-service
+          source-connection-arn: ${{ secrets.AWS_CONNECTION_SOURCE_ARN }}
+          repo: https://github.com/ABAmbros/Repo_App_Runner.git
+          branch: main
+          runtime: PYTHON_3
+          build-command: pip install -r requirements.txt
+          start-command: python app.py
+          port: 8080
+          region: ${{ secrets.AWS_REGION }}
+          cpu : 1
+          memory : 2
+          wait-for-service-stability-seconds: 600
+          tags: >
+            { "env": "test" }
+      
+      - name: App Runner URL
+        run: echo "App runner URL ${{ steps.deploy-apprunner.outputs.service-url }}"
