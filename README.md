@@ -1,3 +1,5 @@
+![Alt text](img/CICD_Pipeline_Git_Hub_Actions.jpeg)
+
 # 🚀 Mi Repositorio de Experimentación con CI/CD y Despliegue en la Nube ☁️
 
 ## 🧪 Explora Mis Acciones en Acción: Flujos de CI/CD con GitHub Actions
@@ -17,6 +19,6 @@ Realizo las configuraciones necesarias en mi repositorio de GitHub para una inte
 
 
 
-Instrucciones de implementación:
+## Instrucciones de implementación:
 
 https://aws.amazon.com/es/blogs/containers/deploy-applications-in-aws-app-runner-with-github-actions/
